@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Glow design system — базовые стили */
+:root {
+  --header-h: 72px;
+  color-scheme: dark;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + 16px);
+  scroll-behavior: smooth;
+  background: #08080c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  @apply bg-void text-light font-body antialiased;
+  margin: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid #a28aff;
+  outline-offset: 2px;
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-page px-4 md:px-10 xl:px-16; }
+  .h2 { @apply font-display font-extrabold uppercase leading-[1.05] text-[30px] md:text-[44px] xl:text-[56px]; }
+  .label { @apply font-mono text-xs uppercase tracking-[0.14em] text-dim; }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-glow px-7 py-5 font-display text-sm font-semibold uppercase text-void transition-colors duration-150 hover:bg-glow-hover active:bg-glow-press disabled:cursor-not-allowed disabled:bg-edge disabled:text-disabled;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center border border-rim px-7 py-[19px] font-display text-sm uppercase text-light transition-colors duration-150 hover:border-light active:bg-screen;
+  }
+  .link-mono { @apply font-mono text-[13px] uppercase tracking-[0.08em] underline underline-offset-[6px] hover:text-glow-hover; }
+
+  .field {
+    @apply w-full border border-grid bg-screen px-4 text-base text-light placeholder:text-disabled;
+    border-radius: 0;
+  }
+  .field:focus { @apply border-glow outline-none; box-shadow: 0 0 0 3px #8a6bff40; }
+  .field[aria-invalid='true'] { @apply border-error; }
+
+  /* Декор: линии, штриховки, уголки */
+  .stripes { background-image: repeating-linear-gradient(135deg, #2a2a34 0 1px, transparent 1px 10px); }
+  .stripes-accent { background-image: repeating-linear-gradient(135deg, #8a6bff 0 2px, transparent 2px 12px); }
+  .scan { background-image: repeating-linear-gradient(0deg, rgba(245, 245, 247, 0.045) 0 1px, transparent 1px 4px); pointer-events: none; }
+  .cols { background-image: linear-gradient(90deg, rgba(245, 245, 247, 0.035) 1px, transparent 1px); background-size: calc(100% / 12) 100%; pointer-events: none; }
+  .corner { position: absolute; width: 18px; height: 18px; border: 0 solid #8a6bff; pointer-events: none; }
+  .corner-tl { left: -1px; top: -1px; border-left-width: 2px; border-top-width: 2px; }
+  .corner-tr { right: -1px; top: -1px; border-right-width: 2px; border-top-width: 2px; }
+  .corner-bl { left: -1px; bottom: -1px; border-left-width: 2px; border-bottom-width: 2px; }
+  .corner-br { right: -1px; bottom: -1px; border-right-width: 2px; border-bottom-width: 2px; }
+  .outline-text { -webkit-text-stroke: 1px #3a3a46; color: transparent; }
+  .glow-bg { background: radial-gradient(closest-side, #8a6bff59, transparent); }
+}
+
+/* Бегущая строка */
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker { animation: ticker 40s linear infinite; }
+.ticker-wrap:hover .ticker { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; transform: none; }
+  .ticker-dup { display: none; }
+  .ticker-track { flex-wrap: wrap; width: auto !important; justify-content: center; }
+}
